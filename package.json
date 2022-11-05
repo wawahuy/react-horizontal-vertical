@@ -1,0 +1,68 @@
+{
+  "name": "react-horizontal-vertical",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.umd.js",
+  "browser": "dist/index.umd.js",
+  "module": "dist/index.esm.js",
+  "type": "dist/index.d.ts",
+  "scripts": {
+    "dev": "cross-env IS_DEVELOPMENT=true rollup -c rollup.config.js -w",
+    "build": "rollup -c rollup.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wawahuy/react-horizontal-vertical.git"
+  },
+  "exports": {
+    ".": {
+      "browser": "./dist/index.umd.js",
+      "module": "./dist/index.esm.js",
+      "import": "./dist/index.esm.js",
+      "umd": "./dist/index.umd.js",
+      "require": "./dist/index.umd.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/types/"
+      ]
+    }
+  },
+  "keywords": [
+    "react-component",
+    "react scrolling",
+    "horizontal scrolling",
+    "react horizontal"
+  ],
+  "author": "wawahuy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wawahuy/react-horizontal-vertical/issues"
+  },
+  "homepage": "https://github.com/wawahuy/react-horizontal-vertical#readme",
+  "devDependencies": {
+    "@babel/core": "^7.20.2",
+    "@babel/plugin-transform-runtime": "^7.19.6",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-typescript": "^7.18.6",
+    "@rollup/plugin-babel": "^6.0.2",
+    "@rollup/plugin-commonjs": "^23.0.2",
+    "@rollup/plugin-terser": "^0.1.0",
+    "@rollup/plugin-typescript": "^9.0.2",
+    "@types/react": "^18.0.25",
+    "cross-env": "^7.0.3",
+    "rollup": "^3.2.5",
+    "rollup-plugin-ignore": "^1.0.10",
+    "rollup-plugin-node-externals": "^5.0.2",
+    "rollup-plugin-postcss": "^4.0.2",
+    "tslib": "^2.4.1"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.20.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
