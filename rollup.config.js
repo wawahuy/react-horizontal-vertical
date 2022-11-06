@@ -1,5 +1,4 @@
 const babel = require('@rollup/plugin-babel');
-const ignore = require('rollup-plugin-ignore');
 const commonjs = require('@rollup/plugin-commonjs');
 const typescript = require('@rollup/plugin-typescript');
 const externals = require('rollup-plugin-node-externals');
@@ -12,21 +11,27 @@ const sourcemap = !isProduction;
 
 module.exports = {
   input: 'src/index.tsx',
+  watch: {
+    include: 'src/**/*',
+    exclude: 'node_modules/**/*',
+    chokidar: {
+      usePolling: true
+    }
+  },
   plugins: [
-    ignore(['react', 'react-dom']),
     externals({ deps: true }),
-    commonjs(),
     babel({
       babelHelpers: "runtime",
       exclude: "**/node_modules/**",
       extensions: [".js", ".jsx", ".ts", ".tsx"],
     }),
     typescript({ sourceMap: sourcemap, tsconfig: './tsconfig.json' }),
-    postcss({
-      modules: false,
-      use: ['sass']
-    }),
-    isProduction && terser({ sourceMap: sourcemap }),
+    commonjs(),
+    // postcss({
+    //   modules: false,
+    //   use: ['sass']
+    // }),
+    // isProduction && terser({ sourceMap: sourcemap }),
   ],
   output: [
     {
