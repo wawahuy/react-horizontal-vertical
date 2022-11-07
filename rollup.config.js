@@ -26,11 +26,12 @@ module.exports = {
     }),
     typescript({ sourceMap: sourcemap, tsconfig: './tsconfig.json' }),
     commonjs(),
-    // postcss({
-    //   modules: false,
-    //   use: ['sass']
-    // }),
-    // isProduction && terser({ sourceMap: sourcemap }),
+    postcss({
+      extract: true,
+      modules: false,
+      use: ['sass']
+    }),
+    isProduction && terser({ sourceMap: sourcemap }),
   ],
   output: [
     {

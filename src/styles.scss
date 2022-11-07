@@ -1,0 +1,30 @@
+.rhv-container {
+  position: relative;
+  overflow: hidden;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  [play-state] {
+    * {
+      animation-play-state: paused !important;
+    }
+  }
+
+  .rhv-item-wrapper {
+    position: relative;
+
+    .rhv-item-float {
+      position: fixed;
+      width: 100vw;
+    }
+
+    .rhv-item-content {
+      position: absolute;
+      width: 100%;
+      top: -100vh;
+      left: 100%;
+    }
+  }
+}
