@@ -12,6 +12,13 @@ const config = {
   output: {
     path: path.resolve(__dirname, "dist"),
   },
+  resolve: {
+    alias: {
+      // link node_modules/react & react-dom of RHV
+      react: path.resolve('..', 'node_modules', 'react'),
+      'react-dom': path.resolve('..', 'node_modules', 'react-dom')
+    }
+  },
   devServer: {
     open: true,
     host: "localhost",

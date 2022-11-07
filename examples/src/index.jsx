@@ -1,13 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import {Test} from 'react-horizontal-vertical';
+import { Rhv, ReactFromModule } from 'react-horizontal-vertical';
+
+console.log('Check React Instance:', React === ReactFromModule);
 
 export const App = () => {
-  console.log('123');
-  return <div>
-    1123
-    <Test abc={123} />
-  </div>
+  return (
+    <div>
+      <Rhv>Hello 1</Rhv>
+    </div>
+  )
 }
 
 const root = ReactDOM.createRoot(document.getElementById("app"));

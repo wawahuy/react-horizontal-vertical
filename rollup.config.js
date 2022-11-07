@@ -1,7 +1,6 @@
 const babel = require('@rollup/plugin-babel');
 const commonjs = require('@rollup/plugin-commonjs');
 const typescript = require('@rollup/plugin-typescript');
-const externals = require('rollup-plugin-node-externals');
 const postcss = require('rollup-plugin-postcss');
 const terser  = require('@rollup/plugin-terser');
 const pkg = require('./package.json');
@@ -18,8 +17,8 @@ module.exports = {
       usePolling: true
     }
   },
+  external: ['react', 'react-dom'],
   plugins: [
-    externals({ deps: true }),
     babel({
       babelHelpers: "runtime",
       exclude: "**/node_modules/**",
