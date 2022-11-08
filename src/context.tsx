@@ -3,10 +3,13 @@ import { RhvReact } from './interfaces/props';
 
 interface RhvState {
   thresholdCount: number;
+  rootElement?: Element;
+  pauseAnimation?: boolean;
 }
 
 const initState: RhvState = {
-  thresholdCount: 400
+  thresholdCount: 1000,
+  pauseAnimation: true
 };
 
 type RhvAction = ({ type: 'init' } & Partial<RhvState>) | { type: 'test' };

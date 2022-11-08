@@ -12,7 +12,7 @@ export interface RhvScrollState {
   directionScrollY?: DirectionScroll;
 }
 
-export const RhvItem: React.FC<RhvItemProps> = ({ element }) => {
+export const RhvItem: React.FC<RhvItemProps> = ({ element, index }) => {
   const [state] = useRhvContext();
   const [height, setHeight] = useState<number>(0);
   const resizeRef$ = useRef<ResizeObserver>();
@@ -24,13 +24,16 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element }) => {
     intersectRatio: 0
   });
 
+  /**
+   * Listen element change size
+   */
   useEffect(() => {
-    const windowHeight = window.innerHeight;
     const el = elementRef.current;
     if (!el) {
       return;
     }
     const handler: ResizeObserverCallback = () => {
+      const windowHeight = window.innerHeight;
       const elHeight = el?.clientHeight || 0;
       setHeight(Math.max(windowHeight, elHeight));
     };
@@ -43,14 +46,16 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element }) => {
     };
   }, []);
 
+  /**
+   * Listen element intersecting viewport
+   */
   useEffect(() => {
     const el = boundInterestRef.current;
     if (!el) {
       return;
     }
 
-    // use variable 'previousRatioScope' because 'previousCurrent' not change
-    // use variable 'previousYScope' because 'previousY' not change
+    let init = false;
     let previousRatioScope = 0;
     let previousYScope = 0;
     const handler = (entries: IntersectionObserverEntry[]) => {
@@ -71,8 +76,21 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element }) => {
       } else {
         directionScrollY = 'down';
       }
+
+      // the previous value is initially 0 so the direction cannot be calculated
+      if (!init && isIntersecting) {
+        if (index % 2 === 0) {
+          directionInterestRatio = 'decrease';
+        } else {
+          directionInterestRatio = 'increase';
+        }
+        directionScrollY = 'down';
+        init = true;
+      }
+
       previousRatioScope = currentRatio;
       previousYScope = currentY;
+
       setScrollState({
         intersectRatio: currentRatio,
         isIntersecting,
@@ -83,6 +101,7 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element }) => {
 
     const thresholdCount = state.thresholdCount;
     const options: IntersectionObserverInit = {
+      root: state.rootElement,
       rootMargin: '0px',
       threshold: Array.from({ length: thresholdCount }).map(
         (_, index) => (index + 1) / thresholdCount
@@ -95,11 +114,15 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element }) => {
       interest$.disconnect();
       interestRef$.current = undefined;
     };
-  }, [state.thresholdCount]);
+  }, [state.thresholdCount, state.rootElement]);
 
+  /**
+   * need: update
+   * @param status
+   */
   const updateAnimation = (status: boolean) => {
     const el = elementRef.current;
-    if (!el) {
+    if (!el || !state.pauseAnimation) {
       return;
     }
 
@@ -116,16 +139,50 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element }) => {
     }
   };
 
+  /**
+   * Snapshot value (session current)
+   */
+  let left: number;
+  let leftPercent: number;
+
+  /**
+   * Compute value (session current)
+   */
+  const isEffect = useMemo(() => {
+    const windowHeight = window.innerHeight;
+    const { isIntersecting, intersectRatio } = scrollState;
+    left = height * intersectRatio;
+    leftPercent = (1 - left / windowHeight) * 100;
+    return !!isIntersecting && leftPercent > 0.25 && height > 0;
+  }, [height, scrollState]);
+
+  /**
+   * need: update
+   * - call events
+   * - update animation
+   */
+  useEffect(() => {
+    if (isEffect) {
+      updateAnimation(isEffect);
+    }
+  }, [isEffect]);
+
+  // ????
+  // need: fixed
+  useEffect(() => {
+    if (!isEffect && scrollState.directionInterestRatio === 'increase') {
+      elementRef.current?.scrollIntoView();
+    }
+  }, [isEffect, scrollState]);
+
+  /**
+   * Wrapper content props
+   * - use snapshot value
+   */
   const elementStyles = useMemo(() => {
     const classes: string[] = [];
     const style: React.CSSProperties = {};
-    const windowHeight = window.innerHeight;
-    const { isIntersecting, intersectRatio, directionInterestRatio, directionScrollY } =
-      scrollState;
-    const left = height * intersectRatio;
-    const leftPercent = (1 - left / windowHeight) * 100;
-    const isEffect = !!isIntersecting && leftPercent > 0.25 && height > 0;
-    updateAnimation(isEffect);
+    const { directionInterestRatio, directionScrollY } = scrollState;
 
     if (isEffect) {
       let alignVertical: 'top' | 'bottom';
@@ -148,7 +205,7 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element }) => {
       className,
       style
     };
-  }, [height, scrollState]);
+  }, [height, scrollState, isEffect]);
 
   const containerStyles = useMemo(() => {
     const classes: string[] = ['rhv-item-wrapper'];
