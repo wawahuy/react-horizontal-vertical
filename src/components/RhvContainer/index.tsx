@@ -1,14 +1,15 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useRhvContext } from '../../context';
-import { RhvItem, RhvItemProps } from '../RhvItem';
+// import { useRhvContext } from '../../context';
+import { RhvItem } from '../RhvItem';
 import { genGlobalID } from '../../helpers';
+import { RhvItemProps } from '../../interfaces/props';
 
 export interface RhvContainerProps {
   children: React.ReactNode;
 }
 
 export const RhvContainer: React.FC<RhvContainerProps> = ({ children }) => {
-  const [state, dispatch] = useRhvContext();
+  // const [state, dispatch] = useRhvContext();
   const [elements, setElements] = useState<RhvItemProps[]>([]);
 
   useEffect(() => {

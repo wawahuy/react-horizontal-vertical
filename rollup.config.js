@@ -44,6 +44,6 @@ module.exports = {
       },
       sourcemap
     },
-    { file: pkg.module, format: 'esm', sourcemap }
+    { file: pkg.module, format: 'es', sourcemap }
   ]
 };
