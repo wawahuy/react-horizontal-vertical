@@ -9,11 +9,11 @@ export const App = () => {
   const render = useMemo(() => {
     return Array.from({ length: 2 }).map((_, index) => {
       return (
-        <div key={index}>
-          <div style={{ fontWeight: 'bold' }}>Page {index}</div>
+        <div key={index} >
+          <div style={{ fontWeight: 'bold', margin: '20px', fontSize: '20px' }}>Page {index}</div>
           {
             ['#aaa', '#bbb', '#ccc', '#ddd', '#aaa', '#bbb', '#ccc', '#ddd', '#aaa', '#bbb', '#ccc', '#ddd', '#aaa', '#bbb', '#ccc', '#ddd']
-              // .slice(0,1)
+              .slice(0,1)
               .map((background, index) => {
                 return (
                   <p key={`abc_${index}`} style={{ background }}>

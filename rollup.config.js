@@ -3,10 +3,12 @@ const commonjs = require('@rollup/plugin-commonjs');
 const typescript = require('@rollup/plugin-typescript');
 const postcss = require('rollup-plugin-postcss');
 const terser  = require('@rollup/plugin-terser');
+const replace = require('@rollup/plugin-replace');
 const pkg = require('./package.json');
 
 const isProduction = !process.env.IS_DEVELOPMENT;
 const sourcemap = !isProduction;
+
 
 module.exports = {
   input: 'src/index.tsx',
@@ -19,6 +21,10 @@ module.exports = {
   },
   external: ['react', 'react-dom'],
   plugins: [
+    replace({
+      '__dev__': !isProduction,
+      preventAssignment: true
+    }),
     babel({
       babelHelpers: "runtime",
       exclude: "**/node_modules/**",
@@ -31,7 +37,7 @@ module.exports = {
       modules: false,
       use: ['sass']
     }),
-    isProduction && terser({ sourceMap: sourcemap }),
+    isProduction && terser({ sourceMap: sourcemap })
   ],
   output: [
     {

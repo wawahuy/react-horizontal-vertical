@@ -11,11 +11,11 @@ export interface RhvProps extends RhvEvent {
   thresholdCount: number;
 
   // Scroll Container. Default 'body'
-  rootElement: Element;
+  rootElement?: Element;
 
   // Pause element when ...
   // need: update
-  pauseAnimation: boolean;
+  pauseAnimation?: boolean;
 }
 
 export interface RhvItemProps {

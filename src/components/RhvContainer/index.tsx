@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 // import { useRhvContext } from '../../context';
 import { RhvItem } from '../RhvItem';
 import { genGlobalID } from '../../helpers';
@@ -10,25 +10,16 @@ export interface RhvContainerProps {
 
 export const RhvContainer: React.FC<RhvContainerProps> = ({ children }) => {
   // const [state, dispatch] = useRhvContext();
-  const [elements, setElements] = useState<RhvItemProps[]>([]);
-
-  useEffect(() => {
-    const list: RhvItemProps[] = [];
-    React.Children.map(children, (element, index) => {
-      list.push({
+  const elements = useMemo(() => {
+    const result = React.Children.map(children, (element, index) => {
+      const props: RhvItemProps = {
         element: element as React.ReactElement,
         index
-      });
+      };
+      return <RhvItem key={`rhv-cnt-${genGlobalID()}`} {...props} />;
     });
-    setElements(list);
-  }, []);
+    return result;
+  }, [children]);
 
-  const render = useMemo(() => {
-    return elements.map((element) => {
-      // eslint-disable-next-line react/jsx-key
-      return <RhvItem key={`rhv-cnt-${genGlobalID()}`} {...element} />;
-    });
-  }, [elements]);
-
-  return <div className="rhv-container">{render}</div>;
+  return <div className="rhv-container">{elements}</div>;
 };
