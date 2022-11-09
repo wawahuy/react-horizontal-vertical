@@ -1,6 +1,7 @@
 .rhv-container {
   position: relative;
   overflow: hidden;
+  transition: 0.3s opacity;
 
   * {
     box-sizing: border-box;

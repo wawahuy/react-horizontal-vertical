@@ -18,7 +18,7 @@ export interface RhvProps extends RhvEvent {
   pauseAnimation?: boolean;
 }
 
-export interface RhvItemProps {
+export interface RhvItemProps extends RhvEvent {
   // Component after inject and render
   element: React.ReactElement;
 

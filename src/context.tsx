@@ -1,7 +1,8 @@
 import React from 'react';
 import { RhvReact } from './interfaces/props';
+import { RhvEvent } from './interfaces/events';
 
-interface RhvState {
+interface RhvState extends RhvEvent {
   thresholdCount: number;
   rootElement?: Element;
   pauseAnimation?: boolean;

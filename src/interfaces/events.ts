@@ -8,5 +8,5 @@ export enum RhvItemState {
 }
 
 export interface RhvEvent {
-  onVisibilityChange: () => void;
+  onStateChange?: (state: RhvItemState, index: number, element?: any) => void;
 }

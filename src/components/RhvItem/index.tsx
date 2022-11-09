@@ -25,7 +25,7 @@ interface RhvViewport {
   height: number;
 }
 
-export const RhvItem: React.FC<RhvItemProps> = ({ element, index }) => {
+export const RhvItem: React.FC<RhvItemProps> = ({ element, index, onStateChange }) => {
   const [state] = useRhvContext();
   const [size, setSize] = useState<RhvViewport>({ width: 0, height: 0 });
   const [scrollState, setScrollState] = useState<RhvScrollState>({
@@ -42,6 +42,18 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element, index }) => {
   const interestRef$ = useRef<IntersectionObserver>();
   const boundInterestRef = useRef<HTMLDivElement | null>(null);
   const elementRef = useRef<HTMLDivElement | null>(null);
+
+  const emitEvent = (s: RhvItemState) => {
+    setTimeout(() => {
+      logD('emit', index);
+      if (onStateChange) {
+        onStateChange(s, index, elementRef.current);
+      }
+      if (state.onStateChange) {
+        state.onStateChange(s, index, elementRef.current);
+      }
+    });
+  };
 
   /**
    * Listen element change size
@@ -179,6 +191,12 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element, index }) => {
     if (itemState === RhvItemState.None) {
       newState = RhvItemState.Initial;
     } else if (itemState >= RhvItemState.Initiated) {
+      // need: update
+      if (itemState === RhvItemState.Initiated) {
+        logD('Item', index, nameEnum(RhvItemState)[newState]);
+        emitEvent(newState);
+      }
+
       if (left > 0) {
         if (isIntersecting && left >= windowHeight) {
           newState = RhvItemState.Focus;
@@ -193,6 +211,7 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element, index }) => {
     if (itemState !== newState) {
       logD('Item', index, nameEnum(RhvItemState)[newState]);
       itemStateRef.current = newState;
+      emitEvent(newState);
     }
 
     // value cached
