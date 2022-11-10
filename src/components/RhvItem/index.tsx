@@ -160,7 +160,7 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element, index, onStateChange 
       const element = elementRef.current;
       if (element && state.pauseAnimation) {
         logD('Animation', index, isFloating);
-        updateAttribute(element, 'pause-state', isFloating);
+        updateAttribute(element, 'pause-state', newState !== RhvItemState.Focus);
       }
     }
   }, [size, intersectState]);

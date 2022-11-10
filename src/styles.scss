@@ -8,7 +8,7 @@
   }
 
   [pause-state] {
-    * {
+    *, *:after, *:before {
       animation-play-state: paused !important;
     }
   }
@@ -22,6 +22,7 @@
 
     .rhv-item-absolute {
       position: absolute;
+      width: 100%;
     }
 
     .rhv-item-content {
