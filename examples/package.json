@@ -33,6 +33,7 @@
     "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
-    "react-horizontal-vertical": "file:.."
+    "react-horizontal-vertical": "file:..",
+    "react-router-dom": "^5.3.4"
   }
 }

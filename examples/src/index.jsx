@@ -2,39 +2,71 @@ import React, { useMemo } from 'react';
 import ReactDOM from "react-dom/client";
 import { Rhv, ReactFromModule } from 'react-horizontal-vertical';
 import './styles.scss'
+import { BrowserRouter, Switch, Route, Link, NavLink } from 'react-router-dom';
+import { TutorialPage } from './pages/Tutorial';
+import { BasicPage } from './pages/Basic';
+import { HomePage } from './pages/Home';
 
 console.log('React instance:', React === ReactFromModule);
 
-export const App = () => {
-  const render = useMemo(() => {
-    return Array.from({ length: 2 }).map((_, index) => {
-      return (
-        <div key={index}>
-          <h1>Page {index}</h1>
-          {
-            ['#aaa', '#bbb', '#ccc', '#ddd', '#aaa', '#bbb', '#ccc', '#ddd', '#aaa', '#bbb', '#ccc', '#ddd', '#aaa', '#bbb', '#ccc', '#ddd']
-              .slice(0,2)
-              .map((background, index) => {
-                return (
-                  <p key={`abc_${index}`} style={{ background }}>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                  </p>
-                )
-              })
-          }
-        </div>
-      )
-    })
-  }, [])
+const config = [
+  {
+    name: 'Tutorial',
+    path: '/',
+    component: <TutorialPage />
+  },
+  {
+    name: 'Basic',
+    path: '/basic',
+    component: <BasicPage />
+  },
+]
 
-  function handleStateChange(state, index, element) {
-  }
+export const App = () => {
+  // const navbar = useMemo(() => {
+  //   return config.map((item, index) =>
+  //     <li key={'menu_l_' + index}>
+  //       <NavLink to={item.path} activeClassName={styles.active} exact>
+  //         {item.name}
+  //       </NavLink>
+  //     </li>
+  //   )
+  // }, [])
+
+  // const switchNode = useMemo(() => {
+  //   return config.map((item, index) =>
+  //      <Route exact path={item.path} key={'menu_s_' + index}>
+  //        {item.component}
+  //      </Route>
+  //   )
+  // }, []);
+
+  // return (
+  //   <BrowserRouter>
+  //     <header>
+  //       React Horizontal Vertical
+  //     </header>
+  //     <div className={styles.container}>
+  //       <ul className={styles.menu}>
+  //         {navbar}
+  //       </ul>
+  //       <div className={styles.content}>
+  //         <Switch>
+  //           {switchNode}
+  //         </Switch>
+  //       </div>
+  //     </div>
+  //   </BrowserRouter>
+  // )
 
   return (
-    <Rhv thresholdCount={1000} onStateChange={handleStateChange}>
-      {render}
-    </Rhv>
+    <BrowserRouter>
+      <Rhv>
+        <HomePage />
+        <BasicPage />
+        <TutorialPage />
+      </Rhv>
+    </BrowserRouter>
   )
 }
 

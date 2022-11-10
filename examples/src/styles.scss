@@ -1,6 +1,89 @@
 @import '../node_modules/react-horizontal-vertical/dist/index.umd.css';
 
+$headerHeight: 50px;
+
+:root {
+  --primary-color: #3aafa9;
+  --primary-alpha50-color: #3aafa988;
+  --secondary-color: #feffff;
+  --text-header: #fff;
+  --text: #17252a;
+  --menu-border: #ddd;
+  --menu-background: #def2f1;
+}
+
 body {
   margin: 0;
   padding: 0;
+  font-family: Roboto;
+  font-size: 14px;
+  color: var(--text);
+  background-color: #feffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+header {
+  height: $headerHeight;
+  padding: 14px;
+  background-color: var(--primary-color);
+  color: var(--text-header);
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.content {
+  flex: 1;
+  padding: 10px;
+}
+
+.menu {
+  list-style-type: none;
+  margin-left: 15px;
+  margin-top: 15px;
+  padding: 0;
+  width: 15%;
+  border-radius: 5px;
+  border-right: 1px solid var(--menu-border);
+  height: calc(100vh - $headerHeight - 30px);
+  background-color: var(--menu-background);
+
+
+  li {
+    margin: 0;
+    padding: 13px 10px;
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--menu-border);
+    }
+    a {
+      color: var(--text);
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+      &.active {
+        font-weight: bold;
+        pointer-events: none;
+      }
+    }
+  }
+}
+
+
+@media screen and (max-width: 680px) {
+  body {
+    font-size: 13px;
+  }
+  .menu, .content {
+    flex-basis: 100%;
+    width: 100%;
+  }
 }

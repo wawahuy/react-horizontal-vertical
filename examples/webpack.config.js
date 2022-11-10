@@ -7,6 +7,22 @@ const isProduction = process.env.NODE_ENV == "production";
 
 const stylesHandler = "style-loader";
 
+const cssIdentNameExcludes = [
+  /react-horizontal-vertical[\\\/]dist[\\\/]index\.umd\.css/
+];
+
+const cssLoader = {
+  loader: 'css-loader',
+  options: {
+    modules: {
+      localIdentName: '[local]_[hash:base64:5]',
+      auto: (resourcePath) => {
+        return !cssIdentNameExcludes.some(r => r.test(resourcePath));
+      },
+    }
+  }
+}
+
 const config = {
   entry: "./src/index.jsx",
   output: {
@@ -17,11 +33,12 @@ const config = {
       // link node_modules/react & react-dom of RHV
       react: path.resolve('..', 'node_modules', 'react'),
       'react-dom': path.resolve('..', 'node_modules', 'react-dom')
-    }
+    },
+    extensions: ['.js', '.jsx', '.ts', '.tsx']
   },
   devServer: {
-    open: true,
     host: "localhost",
+    historyApiFallback: true
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -39,11 +56,11 @@ const config = {
       },
       {
         test: /\.s[ac]ss$/i,
-        use: [stylesHandler, "css-loader", "postcss-loader", "sass-loader"],
+        use: [stylesHandler, cssLoader, "postcss-loader", "sass-loader"],
       },
       {
         test: /\.css$/i,
-        use: [stylesHandler, "css-loader", "postcss-loader"],
+        use: [stylesHandler, cssLoader, "postcss-loader"],
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
