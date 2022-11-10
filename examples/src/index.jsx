@@ -29,7 +29,6 @@ export const App = () => {
   }, [])
 
   function handleStateChange(state, index, element) {
-    console.log('ex', index, state, element);
   }
 
   return (

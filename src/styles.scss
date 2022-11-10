@@ -7,7 +7,7 @@
     box-sizing: border-box;
   }
 
-  [play-state] {
+  [pause-state] {
     * {
       animation-play-state: paused !important;
     }

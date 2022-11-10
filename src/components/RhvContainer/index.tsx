@@ -22,7 +22,6 @@ export const RhvContainer: React.FC<RhvContainerProps> = ({ children }) => {
     if (state === RhvItemState.Initiated) {
       const hm = hmInitiatedRef.current;
       hm[index] = true;
-      console.log(hm);
       setInitiated(hm.every((d) => d));
     }
   };
