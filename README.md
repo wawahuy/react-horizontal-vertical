@@ -1,1 +1,1 @@
-# react-horizontal-scroll
+# React horizontal vertical

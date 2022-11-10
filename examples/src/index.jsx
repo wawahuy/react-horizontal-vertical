@@ -13,7 +13,7 @@ export const App = () => {
           <h1>Page {index}</h1>
           {
             ['#aaa', '#bbb', '#ccc', '#ddd', '#aaa', '#bbb', '#ccc', '#ddd', '#aaa', '#bbb', '#ccc', '#ddd', '#aaa', '#bbb', '#ccc', '#ddd']
-              // .slice(0,1)
+              .slice(0,2)
               .map((background, index) => {
                 return (
                   <p key={`abc_${index}`} style={{ background }}>

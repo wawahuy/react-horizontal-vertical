@@ -4,7 +4,7 @@ export const genGlobalID = () => {
   return ++gId;
 };
 
-export const logD = (...args: any[]) => __dev__ && console.log(...args);
+export const logD = (...args: any[]) => __dev__ && console.log('[Debug]', ...args);
 
 export const nameEnum = (en: any) =>
   Object.keys(en).filter((item) => !Number.isInteger(Number(item)));

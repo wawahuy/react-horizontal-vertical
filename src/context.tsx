@@ -9,7 +9,7 @@ interface RhvState extends RhvEvent {
 }
 
 const initState: RhvState = {
-  thresholdCount: 1000,
+  thresholdCount: 500,
   pauseAnimation: true
 };
 

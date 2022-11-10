@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useLayoutEffect, useMemo, useRef } from 'react';
 import { useRhvContext } from '../../context';
 import { RhvItemProps } from '../../interfaces/props';
 import { RhvItemState } from '../../interfaces/events';
@@ -23,7 +23,6 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element, index, onStateChange 
   const elementRef = useRef<HTMLDivElement>(null);
   const [state] = useRhvContext();
   const [size] = useSize(elementRef);
-
   const [intersectState] = useIntersect(
     (state) => {
       // the previous value is initially 0 so the direction cannot be calculated
@@ -122,7 +121,7 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element, index, onStateChange 
   /**
    * Compute value (session current)
    */
-  useEffect(() => {
+  useLayoutEffect(() => {
     const windowHeight = window.innerHeight;
     const { isIntersecting } = intersectState;
     const { left, isFloating } = valueComputedRef.current;
@@ -139,8 +138,9 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element, index, onStateChange 
         emitEvent(newState);
       }
 
-      if (left > 0) {
-        if (isIntersecting && left >= windowHeight) {
+      const leftError = 0.5;
+      if (left >= leftError) {
+        if (isIntersecting && left >= windowHeight - leftError) {
           newState = RhvItemState.Focus;
         } else {
           newState = RhvItemState.Enter;
