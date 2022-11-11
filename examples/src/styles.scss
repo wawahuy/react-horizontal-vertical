@@ -1,4 +1,7 @@
-@import '../node_modules/react-horizontal-vertical/dist/index.umd.css';
+:global {
+  @import '../node_modules/react-horizontal-vertical/dist/index.umd';
+  @import './global';
+}
 
 $headerHeight: 50px;
 
@@ -8,8 +11,10 @@ $headerHeight: 50px;
   --secondary-color: #feffff;
   --text-header: #fff;
   --text: #17252a;
+  --symbol: #2e5261;
   --menu-border: #ddd;
   --menu-background: #def2f1;
+  --code-bg: #e6e6e6;
 }
 
 body {

@@ -16,9 +16,11 @@ const cssLoader = {
   options: {
     modules: {
       localIdentName: '[local]_[hash:base64:5]',
-      auto: (resourcePath) => {
-        return !cssIdentNameExcludes.some(r => r.test(resourcePath));
-      },
+      // global 3rd
+      // fixed: https://github.com/css-modules/css-modules/pull/65
+      // auto: (resourcePath) => {
+      //   return !cssIdentNameExcludes.some(r => r.test(resourcePath));
+      // },
     }
   }
 }
@@ -37,7 +39,7 @@ const config = {
     extensions: ['.js', '.jsx', '.ts', '.tsx']
   },
   devServer: {
-    host: "localhost",
+    host: "0.0.0.0",
     historyApiFallback: true
   },
   plugins: [

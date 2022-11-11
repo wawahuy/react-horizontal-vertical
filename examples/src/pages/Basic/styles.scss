@@ -1,0 +1,17 @@
+.container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--primary-alpha50-color);
+
+  .center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Rubik Bubbles';
+    font-size: 40px;
+    font-weight: bold;
+    color: var(--text-header);
+  }
+}

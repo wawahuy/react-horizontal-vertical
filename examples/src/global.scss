@@ -1,0 +1,50 @@
+.rhv-ex {
+  padding: 10px;
+  
+  .rhv-ex-name {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 6px;
+    margin-bottom: 22px;
+  }
+
+  .rhv-ex-box {
+    margin-bottom: 28px;
+    
+    .rhv-ex-title {
+      font-size: 16px;
+      font-weight: bold;
+      &::before {
+        content: '#';
+        display: inline-block;
+        margin-right: 3px;
+        color: var(--symbol);
+      }
+    }
+
+
+    .rhv-ex-subtitle {
+      margin-top: 16px;
+    }
+
+    .rhv-ex-group {
+      padding: 0 10px;
+    }
+  
+    pre.code {
+      padding: 10px;
+      border-radius: 5px;
+      background-color: var(--code-bg);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      th, td {
+        border: 1px solid var(--menu-border);
+        padding: 6px;
+      }
+    }
+  }
+}
