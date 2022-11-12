@@ -70,7 +70,6 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element, index, onStateChange 
     } else {
       itemState = RhvItemState.Leave;
     }
-    logD('memo', itemState);
 
     // update styles
     if (itemState === RhvItemState.Enter) {

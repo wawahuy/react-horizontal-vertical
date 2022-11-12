@@ -1,6 +1,6 @@
 {
   "name": "react-horizontal-vertical",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/index.umd.js",
   "browser": "dist/index.umd.js",
@@ -17,7 +17,8 @@
     "format": "prettier --write \"./src/**/*.{js,jsx,ts,tsx,css,md,json}\" --config ./.prettierrc"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "repository": {
     "type": "git",
