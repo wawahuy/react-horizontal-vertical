@@ -171,18 +171,20 @@ export const TutorialPage = () => {
           <div className="rhv-ex-subtitle">
             properties and callback:
           </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Type</th>
-              </tr>
-            </thead>
-            <tbody>
-              {propsAndCallback}
-            </tbody>
-          </table>
+          <div class="rhv-ex-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Type</th>
+                </tr>
+              </thead>
+              <tbody>
+                {propsAndCallback}
+              </tbody>
+            </table>
+          </div>
         </div>
 
 
@@ -190,17 +192,19 @@ export const TutorialPage = () => {
           <div className="rhv-ex-subtitle">
             RhvItemState (enum):
           </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rhvItemState}
-            </tbody>
-          </table>
+          <div class="rhv-ex-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rhvItemState}
+              </tbody>
+            </table>
+            </div>
         </div>
 
       </div>

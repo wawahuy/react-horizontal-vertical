@@ -35,16 +35,24 @@
       padding: 10px;
       border-radius: 5px;
       background-color: var(--code-bg);
+      overflow: auto;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      th, td {
-        border: 1px solid var(--menu-border);
-        padding: 6px;
+    .rhv-ex-table {
+      overflow: auto;
+      max-width: 100%;
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+  
+        th, td {
+          border: 1px solid var(--menu-border);
+          padding: 6px;
+        }
       }
     }
+
   }
 }
