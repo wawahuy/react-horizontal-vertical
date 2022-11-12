@@ -58,9 +58,23 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element, index, onStateChange 
     const left = height * intersectRatio;
     const leftPercent = (1 - left / windowHeight) * 100;
 
+    // if (index === 0 || index === 1) {
+    //   logD(index, 'ratio', intersectRatio, 'inrtersect', isIntersecting, 'left', left);
+    // }
+    //
+    // - samples:
+    // [Debug] 1 ratio 0.28209158778190613 inrtersect true left 399.2124888841063
+    // [Debug] 0 ratio 0.007905751466751099 inrtersect true left 3.1875001695007086
+    // [Debug] 0 ratio 0.005921562667936087 inrtersect true left 2.387500048178481
+    // [Debug] 0 ratio 0.003937373869121075 inrtersect true left 1.5874999268562533
+    // [Debug] 0 ratio 0.00195318553596735 inrtersect false left 0.7874999932828359
+    // [Debug] 1 ratio 0.28435277938842773 inrtersect true left 402.4124989807606
+    //
+    // - result: 2px
+    const leftError = 2;
+
     // update item state
     let itemState = itemStateRef.current;
-    const leftError = 0.5;
     if (left >= leftError) {
       if (isIntersecting && left >= windowHeight - leftError) {
         itemState = RhvItemState.Focus;
