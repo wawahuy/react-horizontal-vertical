@@ -7,6 +7,7 @@
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "prepare": "npm run build",
     "dev": "cross-env IS_DEVELOPMENT=true rollup -c rollup.config.js -w",
     "build": "rollup -c rollup.config.js",
     "test": "jest",
@@ -44,6 +45,9 @@
     "horizontal scrolling",
     "react horizontal"
   ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "author": "wawahuy",
   "license": "MIT",
   "bugs": {
