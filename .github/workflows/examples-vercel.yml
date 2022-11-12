@@ -38,5 +38,6 @@ jobs:
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.ORG_ID}}
+          vercel-args: '--prod'
           vercel-project-id: ${{ secrets.PROJECT_ID}}
           working-directory: ./examples/dist
