@@ -6,18 +6,7 @@ import { logD, nameEnum, updateAttribute } from '../../helpers';
 import { useSize } from '../../hooks/use-size';
 import { useIntersect } from '../../hooks/use-intersect';
 
-interface RhvValueComputed {
-  left: number;
-  leftPercent: number;
-  isFloating: boolean;
-}
-
 export const RhvItem: React.FC<RhvItemProps> = ({ element, index, onStateChange }) => {
-  const valueComputedRef = useRef<RhvValueComputed>({
-    left: 0,
-    leftPercent: 0,
-    isFloating: false
-  });
   const itemStateRef = useRef<RhvItemState>(RhvItemState.None);
   const boundInterestRef = useRef<HTMLDivElement>(null);
   const elementRef = useRef<HTMLDivElement>(null);
@@ -54,27 +43,40 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element, index, onStateChange 
     });
   };
 
-  /**
-   * Wrapper content props
-   */
-  const elementStyles = useMemo(() => {
+  const { itemState, ...elementStyles } = useMemo(() => {
     const classes: string[] = [];
     const style: React.CSSProperties = {};
     const windowHeight = window.innerHeight;
-    const { directionInterestRatio, directionScrollY, intersectRatio } = intersectState;
+    const { directionInterestRatio, directionScrollY, intersectRatio, isIntersecting } =
+      intersectState;
     const { width, height } = size;
     const left = height * intersectRatio;
     const leftPercent = (1 - left / windowHeight) * 100;
-    const isFloating = left > 0 && left < windowHeight && height > 0;
 
-    // value cached
-    // compute inside useMemo because useEffect call after.
-    const valueComputed = valueComputedRef.current;
-    valueComputed.isFloating = isFloating;
-    valueComputed.left = left;
-    valueComputed.leftPercent = leftPercent;
+    // update item state
+    let itemState = itemStateRef.current;
+    if (itemState === RhvItemState.None) {
+      itemState = RhvItemState.Initial;
+    } else if (itemState >= RhvItemState.Initiated) {
+      // need: update
+      if (itemState === RhvItemState.Initiated) {
+        logD('Item', index, nameEnum(RhvItemState)[itemState]);
+        emitEvent(itemState);
+      }
 
-    if (isFloating) {
+      const leftError = 0.5;
+      if (left >= leftError) {
+        if (isIntersecting && left >= windowHeight - leftError) {
+          itemState = RhvItemState.Focus;
+        } else {
+          itemState = RhvItemState.Enter;
+        }
+      } else {
+        itemState = RhvItemState.Leave;
+      }
+    }
+
+    if (itemState === RhvItemState.Enter) {
       let alignVertical: 'top' | 'bottom';
       let alignHorizontal: 'left' | 'right';
       if (directionScrollY === 'down') {
@@ -98,9 +100,25 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element, index, onStateChange 
     const className = classes.join(' ');
     return {
       className,
-      style
+      style,
+      itemState
     };
   }, [size, intersectState]);
+
+  useLayoutEffect(() => {
+    logD('Item', index, nameEnum(RhvItemState)[itemState]);
+    emitEvent(itemState);
+
+    // pause/play animation
+    const element = elementRef.current;
+    if (element && state.pauseAnimation) {
+      logD('Animation', index, itemState !== RhvItemState.Focus);
+      updateAttribute(element, 'pause-state', itemState !== RhvItemState.Focus);
+    }
+
+    // save previous itemState
+    itemStateRef.current = itemState;
+  }, [itemState]);
 
   const containerStyles = useMemo(() => {
     const classes: string[] = ['rhv-item-wrapper'];
@@ -117,53 +135,6 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element, index, onStateChange 
       style
     };
   }, [size]);
-
-  /**
-   * Compute value (session current)
-   */
-  useLayoutEffect(() => {
-    const windowHeight = window.innerHeight;
-    const { isIntersecting } = intersectState;
-    const { left, isFloating } = valueComputedRef.current;
-
-    // update item state
-    const itemState = itemStateRef.current;
-    let newState = itemState;
-    if (itemState === RhvItemState.None) {
-      newState = RhvItemState.Initial;
-    } else if (itemState >= RhvItemState.Initiated) {
-      // need: update
-      if (itemState === RhvItemState.Initiated) {
-        logD('Item', index, nameEnum(RhvItemState)[newState]);
-        emitEvent(newState);
-      }
-
-      const leftError = 0.5;
-      if (left >= leftError) {
-        if (isIntersecting && left >= windowHeight - leftError) {
-          newState = RhvItemState.Focus;
-        } else {
-          newState = RhvItemState.Enter;
-        }
-      } else {
-        newState = RhvItemState.Leave;
-      }
-    }
-
-    // check call event
-    if (itemState !== newState) {
-      logD('Item', index, nameEnum(RhvItemState)[newState]);
-      itemStateRef.current = newState;
-      emitEvent(newState);
-
-      // pause/play animation
-      const element = elementRef.current;
-      if (element && state.pauseAnimation) {
-        logD('Animation', index, isFloating);
-        updateAttribute(element, 'pause-state', newState !== RhvItemState.Focus);
-      }
-    }
-  }, [size, intersectState]);
 
   return (
     <div ref={boundInterestRef} {...containerStyles}>
