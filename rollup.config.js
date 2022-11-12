@@ -16,7 +16,7 @@ module.exports = {
     include: 'src/**/*',
     exclude: 'node_modules/**/*',
     chokidar: {
-      usePolling: true
+      // usePolling: true
     }
   },
   external: ['react', 'react-dom'],
