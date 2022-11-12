@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-interface RhvSize {
+export interface RhvSize {
   width: number;
   height: number;
 }

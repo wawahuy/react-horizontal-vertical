@@ -13,7 +13,7 @@ export interface RhvIntersectState {
 }
 
 export const useIntersect = <T extends HTMLElement>(
-  callback: (state: RhvIntersectState) => RhvIntersectState,
+  callback: (state: RhvIntersectState) => MayBeEmpty<RhvIntersectState>,
   boundInterestRef: React.MutableRefObject<MayBeEmpty<T>>,
   thresholdCount: number,
   rootElement: MayBeEmpty<Element>
@@ -50,16 +50,20 @@ export const useIntersect = <T extends HTMLElement>(
       previousRatioScope = currentRatio;
       previousYScope = currentY;
 
-      let state: RhvIntersectState = {
+      const state: RhvIntersectState = {
         intersectRatio: currentRatio,
         isIntersecting,
         directionInterestRatio,
         directionScrollY
       };
       if (callback) {
-        state = callback(state);
+        const newState = callback(state);
+        if (newState) {
+          setIntersectState(newState);
+        }
+      } else {
+        setIntersectState(state);
       }
-      setIntersectState(state);
     };
 
     const options: IntersectionObserverInit = {

@@ -59,7 +59,17 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element, index, onStateChange 
     const leftPercent = (1 - left / windowHeight) * 100;
 
     // if (index === 0 || index === 1) {
-    //   logD(index, 'ratio', intersectRatio, 'inrtersect', isIntersecting, 'left', left);
+    //   logD(index, 'memo-size', size);
+    //   logD(
+    //     index,
+    //     'ratio',
+    //     intersectRatio,
+    //     'inrtersect',
+    //     isIntersecting,
+    //     'left',
+    //     left,
+    //     nameEnum(RhvItemState)[itemStateRef.current]
+    //   );
     // }
     //
     // - samples:
