@@ -9,6 +9,7 @@ const code = {
 }
   `,
   css: `@import '~node_modules/react-horizontal-vertical/dist/index.umd';`,
+  orCss: `import "react-horizontal-vertical/dist/index.umd.css";`,
   js: `
 import { Rhv } from 'react-horizontal-vertical';
 
@@ -129,6 +130,17 @@ export const TutorialPage = () => {
           <pre className='code'>
             <code lang="language-scss">
               {code.css.trim()}
+            </code>
+          </pre>
+        </div>
+
+        <div className="rhv-ex-group">
+          <div className="rhv-ex-subtitle">
+            or in App.jsx
+          </div>
+          <pre className='code'>
+            <code lang="language-scss">
+              {code.orCss.trim()}
             </code>
           </pre>
         </div>
