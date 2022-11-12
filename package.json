@@ -1,6 +1,6 @@
 {
   "name": "react-horizontal-vertical",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "dist/index.umd.js",
   "browser": "dist/index.umd.js",
@@ -9,7 +9,7 @@
   "scripts": {
     "prepare": "npm run build",
     "dev": "cross-env IS_DEVELOPMENT=true rollup -c rollup.config.js -w",
-    "build": "rollup -c rollup.config.js",
+    "build": "rimraf ./dist && rollup -c rollup.config.js",
     "test": "jest",
     "coverage": "jest --coverage",
     "lint": "eslint .",
@@ -81,6 +81,7 @@
     "jest-environment-jsdom": "^29.2.2",
     "prettier": "^2.7.1",
     "react-test-renderer": "^18.2.0",
+    "rimraf": "^3.0.2",
     "rollup": "^3.2.5",
     "rollup-plugin-postcss": "^4.0.2",
     "sass": "^1.56.0",
