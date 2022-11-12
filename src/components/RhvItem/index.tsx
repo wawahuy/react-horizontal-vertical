@@ -15,15 +15,15 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element, index, onStateChange 
   const [intersectState] = useIntersect(
     (state) => {
       // the previous value is initially 0 so the direction cannot be calculated
-      if (itemStateRef.current <= RhvItemState.Initial) {
+      if (itemStateRef.current <= RhvItemState.None) {
         if (index % 2 === 0) {
           state.directionInterestRatio = 'decrease';
         } else {
           state.directionInterestRatio = 'increase';
         }
         state.directionScrollY = 'down';
-        itemStateRef.current = RhvItemState.Initiated;
       }
+      // logD('intersect', index, state);
       return state;
     },
     boundInterestRef,
@@ -44,6 +44,11 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element, index, onStateChange 
   };
 
   const { itemState, ...elementStyles } = useMemo(() => {
+    // because useIntersect and useSize register event after render
+    if (!intersectState || !size) {
+      return {};
+    }
+
     const classes: string[] = [];
     const style: React.CSSProperties = {};
     const windowHeight = window.innerHeight;
@@ -55,27 +60,19 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element, index, onStateChange 
 
     // update item state
     let itemState = itemStateRef.current;
-    if (itemState === RhvItemState.None) {
-      itemState = RhvItemState.Initial;
-    } else if (itemState >= RhvItemState.Initiated) {
-      // need: update
-      if (itemState === RhvItemState.Initiated) {
-        logD('Item', index, nameEnum(RhvItemState)[itemState]);
-        emitEvent(itemState);
-      }
-
-      const leftError = 0.5;
-      if (left >= leftError) {
-        if (isIntersecting && left >= windowHeight - leftError) {
-          itemState = RhvItemState.Focus;
-        } else {
-          itemState = RhvItemState.Enter;
-        }
+    const leftError = 0.5;
+    if (left >= leftError) {
+      if (isIntersecting && left >= windowHeight - leftError) {
+        itemState = RhvItemState.Focus;
       } else {
-        itemState = RhvItemState.Leave;
+        itemState = RhvItemState.Enter;
       }
+    } else {
+      itemState = RhvItemState.Leave;
     }
+    logD('memo', itemState);
 
+    // update styles
     if (itemState === RhvItemState.Enter) {
       let alignVertical: 'top' | 'bottom';
       let alignHorizontal: 'left' | 'right';
@@ -106,6 +103,17 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element, index, onStateChange 
   }, [size, intersectState]);
 
   useLayoutEffect(() => {
+    if (!itemState) {
+      return;
+    }
+
+    // emit initial
+    if (itemStateRef.current === RhvItemState.None) {
+      logD('Item', index, nameEnum(RhvItemState)[RhvItemState.Initial]);
+      emitEvent(RhvItemState.Initial);
+    }
+
+    // emit
     logD('Item', index, nameEnum(RhvItemState)[itemState]);
     emitEvent(itemState);
 
@@ -123,7 +131,7 @@ export const RhvItem: React.FC<RhvItemProps> = ({ element, index, onStateChange 
   const containerStyles = useMemo(() => {
     const classes: string[] = ['rhv-item-wrapper'];
     const style: React.CSSProperties = {};
-    const height = size.height;
+    const height = size?.height || 0;
 
     if (height > 0) {
       style.height = `${height}px`;

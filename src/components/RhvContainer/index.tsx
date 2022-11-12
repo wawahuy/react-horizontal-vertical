@@ -1,5 +1,4 @@
 import React, { useMemo, useRef, useState } from 'react';
-// import { useRhvContext } from '../../context';
 import { RhvItem } from '../RhvItem';
 import { genGlobalID } from '../../helpers';
 import { RhvItemProps } from '../../interfaces/props';
@@ -14,12 +13,11 @@ const genArrayInitiated = (count: number) => {
 };
 
 export const RhvContainer: React.FC<RhvContainerProps> = ({ children }) => {
-  // const [state, dispatch] = useRhvContext();
   const [isInitiated, setInitiated] = useState<boolean>();
   const hmInitiatedRef = useRef(genArrayInitiated(React.Children.count(children)));
 
   const handleStateChange = (state: RhvItemState, index: number) => {
-    if (state === RhvItemState.Initiated) {
+    if (state === RhvItemState.Initial) {
       const hm = hmInitiatedRef.current;
       hm[index] = true;
       setInitiated(hm.every((d) => d));

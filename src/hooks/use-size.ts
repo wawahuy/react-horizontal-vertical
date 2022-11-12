@@ -8,7 +8,7 @@ interface RhvSize {
 export const useSize = <T extends HTMLElement>(
   ref: React.MutableRefObject<T | null | undefined>
 ) => {
-  const [size, setSize] = useState<RhvSize>({ width: 0, height: 0 });
+  const [size, setSize] = useState<RhvSize | null>(null);
   const resizeRef$ = useRef<ResizeObserver>();
 
   useEffect(() => {

@@ -18,10 +18,7 @@ export const useIntersect = <T extends HTMLElement>(
   thresholdCount: number,
   rootElement: MayBeEmpty<Element>
 ) => {
-  const [intersectState, setIntersectState] = useState<RhvIntersectState>({
-    isIntersecting: false,
-    intersectRatio: 0
-  });
+  const [intersectState, setIntersectState] = useState<RhvIntersectState | null>(null);
 
   const interestRef$ = useRef<IntersectionObserver>();
 

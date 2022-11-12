@@ -55,12 +55,8 @@ export const App = () => {
       'description': '',
     },
     {
-      'name': 'Initial',
-      'description': 'Before render',
-    },
-    {
       'name': 'Initiated',
-      'description': 'After compute and render',
+      'description': 'After compute',
     },
     {
       'name': 'Enter',
@@ -92,7 +88,7 @@ export const TutorialPage = () => {
       )
     })
   }, []);
-  
+
   const rhvItemState = useMemo(() => {
     return code.rhvItemState.map((item, index) => {
       return (
@@ -125,7 +121,7 @@ export const TutorialPage = () => {
 
       <div className="rhv-ex-box">
         <div className="rhv-ex-title">Usage</div>
-        
+
         <div className="rhv-ex-group">
           <div className="rhv-ex-subtitle">
             import style in '.css/scss' file:

@@ -1,7 +1,6 @@
 export enum RhvItemState {
   None,
   Initial,
-  Initiated,
   Enter,
   Leave,
   Focus
