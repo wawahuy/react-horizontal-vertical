@@ -1,15 +1,14 @@
 import React, {useEffect, useMemo, useRef} from 'react';
-import styles from './styles.scss';
 
 const code = {
   install: '',
   cssLocalIdentName: `
 :global {
-  @import '~node_modules/react-horizontal-vertical/dist/index.umd';
+  @import '~react-horizontal-vertical/rhv.css';
 }
   `,
-  css: `@import '~node_modules/react-horizontal-vertical/dist/index.umd';`,
-  orCss: `import "react-horizontal-vertical/dist/index.umd.css";`,
+  css: `@import '~react-horizontal-vertical/rhv.css';`,
+  orCss: `import "react-horizontal-vertical/rhv.css";`,
   js: `
 import { Rhv } from 'react-horizontal-vertical';
 
@@ -104,7 +103,7 @@ export const TutorialPage = () => {
   }, []);
 
   return (
-    <div className={`rhv-ex ${styles.container}`}>
+    <div className={`rhv-ex`}>
       <div className="rhv-ex-name">
         Tutorial
       </div>
@@ -171,7 +170,7 @@ export const TutorialPage = () => {
           <div className="rhv-ex-subtitle">
             properties and callback:
           </div>
-          <div class="rhv-ex-table">
+          <div className="rhv-ex-table">
             <table>
               <thead>
                 <tr>
@@ -192,7 +191,7 @@ export const TutorialPage = () => {
           <div className="rhv-ex-subtitle">
             RhvItemState (enum):
           </div>
-          <div class="rhv-ex-table">
+          <div className="rhv-ex-table">
             <table>
               <thead>
                 <tr>

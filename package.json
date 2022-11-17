@@ -1,6 +1,6 @@
 {
   "name": "react-horizontal-vertical",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "main": "dist/index.umd.js",
   "browser": "dist/index.umd.js",
@@ -31,7 +31,8 @@
       "import": "./dist/index.esm.js",
       "umd": "./dist/index.umd.js",
       "require": "./dist/index.umd.js"
-    }
+    },
+    "./rhv.css": "./dist/index.umd.css"
   },
   "typesVersions": {
     "*": {
