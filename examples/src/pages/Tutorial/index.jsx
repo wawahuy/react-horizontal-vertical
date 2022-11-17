@@ -4,10 +4,10 @@ const code = {
   install: '',
   cssLocalIdentName: `
 :global {
-  @import '~react-horizontal-vertical/rhv.css';
+  @import "~react-horizontal-vertical/dist/index.umd.css";;
 }
   `,
-  css: `@import '~react-horizontal-vertical/rhv.css';`,
+  css: `@import "~react-horizontal-vertical/dist/index.umd.css";;`,
   orCss: `import "react-horizontal-vertical/rhv.css";`,
   js: `
 import { Rhv } from 'react-horizontal-vertical';
